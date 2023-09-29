@@ -1,0 +1,33 @@
+1. How would you deploy this application in production?
+   To deploy this application in production:
+   a. Using Docker, we can package the application and its dependencies into containers.
+   b. Deploy and configure Postgress, Amazon SQS  
+   c. Build CI/CD pipeline to automate building, testing, and deploying the application to production.
+   d. Use Kubernetes for automating software deployment, scaling, and management
+   e. Monitoring and Logging
+
+2. What other components would you want to add to make this production ready?
+   For production readiness, several additional components and best practices can be added, such as:
+   a. Implement security measures to protect sensitive data and prevent unauthorized access.
+   b. Use a Load balancer to distribute the workload evenly across multiple machines. 
+   c. Data Backup and Recovery.
+   d. Implement end-to-end unit tests.
+   e. Continuous Monitoring
+
+3. How can this application scale with a growing dataset?
+   a. Vertical Scaling (Upgrade the hardware and resources of the server)
+   b. Horizontal Scaling (use more workers and maybe a load balancer to distribute the work)
+   c. Sharding: Partition the dataset into smaller, manageable pieces and distribute them across multiple database instances or clusters.
+   d. Optimization (Techniques like caching and indexing)
+
+4. How can PII be recovered later on?
+   The data masked using SHA-256 hash cannot be directly recovered to its original form. 
+   The purpose of using SHA-256 hashing in this context is to protect sensitive information (PII) by 
+   obscuring the original values while still allowing for data analysis based on the masked values. 
+   Since the hash is unique for each input, you can use it to identify duplicate 'device_id' and 'ip' values without exposing the actual data.
+   if we want to recover it, use symmetric encryption with a secret key. (Ex: Fernet)
+
+5. What are the assumptions you made?
+   a. The application is running in a local development environment, using localstack for SQS and a locally available Postgres database.
+   b. The application is hiding PII data by hashing the 'device_id' and 'ip' fields using SHA-256. We are okay with losing the original values as this data is used for analysis.
+   c. The 'app_version' field is a string representing the app version in X.Y.Z format, where X, Y, and Z are integers. The conversion to and from integer representation assumes a maximum value of 99 for each part (X, Y, Z).
